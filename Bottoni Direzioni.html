@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direzione Buttons</title>
+    <style>
+        .container{
+width: 500px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+margin: 0;
+font-family: Arial, sans-serif;
+background-color: #c4c4c4;
+}
+
+
+button {
+display: inline-block;
+padding: 10px 20px;
+font-size: 16px;
+text-align: center;
+text-decoration: none;
+cursor: pointer;
+border-radius: 5px;
+color: #fff;
+background-color: #3498db;
+margin: 10px;
+}
+
+
+#Alto {
+order: 1; /* Posiziona il Player 1 in alto */
+}
+
+
+#Destra{
+    order: 3;
+    margin-left: 300px;
+    margin-top: 70px;
+}
+
+#Sinistra{
+    order: 3;
+    margin-right: 300px;
+    margin-top: -60px;
+}
+
+
+#Basso {
+order: 4; /* Posiziona il Player 2 in basso */
+margin-top: 70px;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>Bottoni direzionali</h1>
+    <div class="container">
+        
+            <button  id="Alto">⬆️</button>
+            <button  id="Basso">⬇️</button>
+            <button  id="Destra">➡️</button>
+            <button  id="Sinistra">⬅️</button>
+            
+    </div>
+    <script>
+        const up = document.getElementById('Alto');
+        const left = document.getElementById('Sinistra');
+        const right = document.getElementById('Destra');
+        const down = document.getElementById('Basso');
+
+        up.addEventListener('click', () => {
+            alert('alto');
+        });
+
+        left.addEventListener('click', () => {
+            alert('sinistra');
+        });
+
+        right.addEventListener('click', () => {
+            alert('destra');
+        });
+
+        down.addEventListener('click', () => {
+            alert('basso');
+        });
+    </script>
+</body>
+</html>
