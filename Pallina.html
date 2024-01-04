@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pallina che si muove</title>
+    <style>
+        #campo {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+        }
+        #moveImage {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="campo">
+        <div id="moveImage"></div>
+    </div>
+    <script>
+        const moveImage = document.getElementById('moveImage');
+
+        document.addEventListener('keydown', (event) => {
+            let step = 10; 
+            let currentLeft = parseInt(getComputedStyle(moveImage).left) || 0;
+            let currentTop = parseInt(getComputedStyle(moveImage).top) || 0;
+
+            switch (event.key) {
+                case 'ArrowUp':
+                    moveImage.style.top = `${currentTop - step}px`;
+                    break;
+                case 'ArrowDown':
+                    moveImage.style.top = `${currentTop + step}px`;
+                    break;
+                case 'ArrowLeft':
+                    moveImage.style.left = `${currentLeft - step}px`;
+                    break;
+                case 'ArrowRight':
+                    moveImage.style.left = `${currentLeft + step}px`;
+                    break;
+                default:
+                    break;
+            }
+
+
+            
+function limitMovement() {
+    const campoDiv = document.getElementById('campo');
+    const campoWidth = campoDiv.clientWidth;
+    const campoHeight = campoDiv.clientHeight;
+
+    const currentLeft = parseInt(getComputedStyle(moveImage).left) || 0;
+    const currentTop = parseInt(getComputedStyle(moveImage).top) || 0;
+
+    if (currentLeft <= 0) {
+        moveImage.style.left = '0px';
+    } else if (currentLeft >= campoWidth - moveImage.clientWidth) {
+        moveImage.style.left = `${campoWidth - moveImage.clientWidth}px`;
+    }
+
+    if (currentTop <= 0) {
+        moveImage.style.top = '0px';
+    } else if (currentTop >= campoHeight - moveImage.clientHeight) {
+        moveImage.style.top = `${campoHeight - moveImage.clientHeight}px`;
+    }
+}
+
+
+switch (direction) {
+    case 'up':
+        moveImage.style.top = `${currentTop - step}px`;
+        break;
+    case 'down':
+        moveImage.style.top = `${currentTop + step}px`;
+        break;
+    case 'left':
+        moveImage.style.left = `${currentLeft - step}px`;
+        break;
+    case 'right':
+        moveImage.style.left = `${currentLeft + step}px`;
+        break;
+    default:
+        break;
+}
+
+    limitMovement();
+});
+    </script>
+</body>
+</html>
