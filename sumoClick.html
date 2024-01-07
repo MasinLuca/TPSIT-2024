@@ -1,115 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Game</title>
- <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sumo Click Game</title>
+  <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: rgb(11, 170, 11);
+      text-align: center;
     }
-    .field {
+    #field {
+      border-radius: 150px;
+      width: 400px;
+      height: 400px;
+      margin: 50px auto;
       position: relative;
-      width: 500px;
-      height: 500px;
-      background-color: rgb(0, 146, 0);
-      border: 5px solid black;
+      background-color: rgb(255, 255, 255);
     }
-    .circle {
+    #player1 {
       position: absolute;
       top: 50%;
-      left: 50%;
-      width: 100px;
-      height: 100px;
-      background-color: white;
-      border-radius: 50%;
+      left: 10%;
       transform: translate(-50%, -50%);
-    }
-    .button {
-      position: absolute;
-      width: 100px;
-      height: 100px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      background-color: rgb(71, 71, 255);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
+      background-color: rgb(28, 28, 252);
     }
-    .player1 {
-      top: 0;
-      left: 0;
-    }
-    .player2 {
-      top: 0;
-      right: 0;
-    }
-    .timer {
+    #player2 {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 20px;
-      background-color: #eee6a0;
-      text-align: center;
-      line-height: 20px;
-      font-size: 14px;
+      top: 50%;
+      left: 90%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgb(228, 36, 36);
     }
- </style>
+  </style>
 </head>
 <body>
- <div class="field">
-    <div class="circle"></div>
-    <div class="button player1" onclick="movePlayer1()">Player 1</div>
-    <div class="button player2" onclick="movePlayer2()">Player 2</div>
-    <div class="timer" id="timer">Clicca per iniziare</div>
- </div>
- <script>
-    const circle = document.querySelector('.circle');
-    const player1Button = document.querySelector('.player1');
-    const player2Button = document.querySelector('.player2');
-    const timerElement = document.getElementById('timer');
-
-    let player1Turn = true;
-    let timer = 60;
-
+  <h1>Sumo Click Game</h1>
+  <div id="field">
+    <div id="player1"></div>
+    <div id="player2"></div>
+  </div>
+  <button id="startButton">Start</button>
+  <p id="cont">0</p>
+  <script>
+    let timer;
+    let timeLeft = 60;
+    let p1Score = 0;
+    let p2Score = 0;
     function movePlayer1() {
-      circle.style.transform = 'translate(-400px, -50%)';
-      checkForVictory();
+      document.getElementById("player1").style.top = Math.random() * 200 + "px";
+      p1Score++;
     }
-
     function movePlayer2() {
-      circle.style.transform = 'translate(400px, -50%)';
-      checkForVictory();
+      document.getElementById("player2").style.top = Math.random() * 200 + "px";
+      p2Score++;
     }
-
-    function checkForVictory() {
-      const circleStyle = window.getComputedStyle(circle);
-      const transform = circleStyle.getPropertyValue('transform');
-      const translation = parseFloat(transform.split(',')[0].split('(')[1]);
-
-      if (player1Turn && translation > 250) {
-        alert('Player 1 wins!');
-        clearInterval(timerInterval);
-      } else if (!player1Turn && translation < -250) {
-        alert('Player 2 wins!');
-        clearInterval(timerInterval);
-      }
-    }
-
     function startTimer() {
-      timerInterval = setInterval(() => {
-        timer--;
-        timerElement.textContent = timer;
-        if (timer === 0) {
-          clearInterval(timerInterval);
-          alert('Time\'s up!');
+      countdown();
+      document.getElementById("startButton").disabled = true;
+    }
+    function countdown() {
+      timer = setInterval(function() {
+        timeLeft--;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          if (p1Score > p2Score) {
+            alert("Player 1 wins!");
+          } else if (p2Score > p1Score) {
+            alert("Player 2 wins!");
+          } else {
+            alert("It's a tie!");
+          }
         }
       }, 1000);
     }
+    document.getElementById("startButton").addEventListener("click", startTimer);
+    document.getElementById("player1").addEventListener("click", movePlayer1);
+    document.getElementById("player2").addEventListener("click", movePlayer2);
+  </script>
 
-    timerElement.addEventListener('click', startTimer);
- </script>
+
+<script>
+    let cronometro = 60;
+
+    let miointervallo = setInterval(myStartCounter, 1000)
+    let cronometroIntervallo;
+    let tempoGIOCO = setTimeout(
+      function () {
+        cronometroIntervallo = setInterval(contatoreGioco, 100)
+      }
+      , 4000)
+
+
+  
+
+    function myStartCounter() {
+      contatoreStart++;
+      document.getElementById("cont").innerHTML = contatoreStart;
+
+      
+      if (contatoreStart > 3) {
+        clearInterval(miointervallo)
+        document.getElementById("cont").innerHTML = "START"
+      }
+
+    }
+  
+    function contatoreGioco() {
+
+
+      cronometro = cronometro - 0.1;
+      document.getElementById("cont").innerHTML = cronometro.toFixed(1);
+      if (cronometro <= 0.0) {
+        clearInterval(cronometroIntervallo);
+        document.getElementById("cont").innerHTML = "Game Over";
+      }
+
+  
+
+    }
+
+</script>
 </body>
 </html>
